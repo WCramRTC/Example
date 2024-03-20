@@ -1,13 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enrollment Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        margin: 10px;
+    }
+    .form-control {
+        margin-bottom: 10px;
+    }
+    .form-control label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-control input, .form-control select {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .form-actions {
+        margin-top: 10px;
+        text-align: right;
+    }
+    .form-actions button {
+        padding: 5px 10px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    .form-actions button:hover {
+        background-color: #0056b3;
+    }
+    .students-list {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .students-list th, .students-list td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .students-list th {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
 </head>
 <body>
-    <p>Hi all</p>
-    <p>Its me</p>
-    <p>Command line</p>
+<div class="container">
+    <div class="form-control">
+        <label for="txtFirstName">First Name:</label>
+        <input type="text" id="txtFirstName">
+    </div>
+    <div class="form-control">
+        <label for="txtLastName">Last Name:</label>
+        <input type="text" id="txtLastName">
+    </div>
+    <div class="form-control">
+        <label for="txtAddress">Address:</label>
+        <input type="text" id="txtAddress">
+    </div>
+    <div class="form-control">
+        <label for="cmbProgramType">Program Type:</label>
+        <select id="cmbProgramType">
+            <option value="Science">Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Arts">Arts</option>
+            <option value="Sports">Sports</option>
+        </select>
+    </div>
+    <div class="form-control">
+        <label for="txtPhoneNumber">Phone Number:</label>
+        <input type="text" id="txtPhoneNumber">
+    </div>
+    <div class="form-actions">
+        <button onclick="resetForm()">Reset</button>
+        <button onclick="submitForm()">Submit</button>
+    </div>
+    <table class="students-list" id="lstStudents">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Program Type</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let students = [];
+
+    function resetForm() {
+        document.getElementById('txtFirstName').value = '';
+        document.getElementById('txtLastName').value = '';
+        document.getElementById('txtAddress').value = '';
+        document.getElementById('cmbProgramType').selectedIndex = -1;
+        document.getElementById('txtPhoneNumber').value = '';
+    }
+
+    function submitForm() {
+        let firstName = document.getElementById('txtFirstName').value;
+        let lastName = document.getElementById('txtLastName').value;
+        let address = document.getElementById('txtAddress').value;
+        let programType = document.getElementById('cmbProgramType').value;
+        let phoneNumber = document.getElementById('txtPhoneNumber').value;
+
+        let newStudent = {
+            FirstName: firstName,
+            LastName: lastName,
+            Address: address,
+            ProgramType: programType,
+            PhoneNumber: phoneNumber
+        };
+
+        students.push(newStudent);
+        displayStudents();
+        alert("Form Submitted Successfully!");
+    }
+
+    function displayStudents() {
+        let tableBody = document.querySelector('.students-list tbody');
+        tableBody.innerHTML = '';
+
+        students.forEach(student => {
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.FirstName}</td>
+                <td>${student.LastName}</td>
+                <td>${student.Address}</td>
+                <td>${student.ProgramType}</td>
+                <td>${student.PhoneNumber}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+</script>
 </body>
 </html>
